@@ -4,7 +4,7 @@ metadata:
   name: sandbox-app
   namespace: argocd
 spec:
-  description: sandbox-app の prd overlay を production cluster へ同期します
+  description: production cluster の sandbox-app namespace に prd overlay を同期
   sourceRepos:
     - https://github.com/navy1634/sandbox_app.git
   destinations:

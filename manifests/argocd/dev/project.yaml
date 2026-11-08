@@ -4,7 +4,7 @@ metadata:
   name: sandbox-app
   namespace: argocd
 spec:
-  description: sandbox-app の dev overlay を sandbox-app namespace へ同期します
+  description: sandbox-app namespace に dev overlay を同期
   sourceRepos:
     - https://github.com/navy1634/sandbox_app.git
   destinations:
