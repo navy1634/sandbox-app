@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sandbox-app-dev
+  namespace: argocd
+spec:
+  project: sandbox-app-dev
+  source:
+    repoURL: https://github.com/navy1634/sandbox_app.git
+    targetRevision: main
+    path: manifests/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sandbox-app
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true

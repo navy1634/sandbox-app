@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: sandbox-app-prd
+  namespace: argocd
+spec:
+  description: sandbox-app の prd overlay を production cluster へ同期します
+  sourceRepos:
+    - https://github.com/navy1634/sandbox_app.git
+  destinations:
+    - name: production
+      namespace: sandbox-app
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+      name: sandbox-app
+  namespaceResourceWhitelist:
+    - group: ""
+      kind: ConfigMap
+    - group: ""
+      kind: Service
+    - group: apps
+      kind: Deployment
+    - group: apps
+      kind: StatefulSet
+    - group: networking.k8s.io
+      kind: Ingress
+    - group: networking.k8s.io
+      kind: NetworkPolicy
