@@ -9,8 +9,6 @@ workflows:
     '.github/workflows/manifests-ci.yml':
         - 'actions/checkout@v7.0.1'
         - 'jdx/mise-action@v5.0.0'
-    '.github/workflows/verify-lockfile.yml':
-        - 'actions/checkout@v7.0.1'
     '.github/workflows/web-ci.yml':
         - 'actions/checkout@v7.0.1'
         - 'jdx/mise-action@v5.0.0'
