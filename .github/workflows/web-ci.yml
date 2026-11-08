@@ -1,0 +1,59 @@
+name: Web CI
+
+on:
+  pull_request:
+    paths:
+      - web/**
+      - .github/workflows/web-ci.yml
+      - .github/actions/setup-mise/action.yml
+  push:
+    branches:
+      - main
+    paths:
+      - web/**
+      - .github/workflows/web-ci.yml
+      - .github/actions/setup-mise/action.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Web checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    defaults:
+      run:
+        working-directory: web
+        
+    steps:
+      - name: checkout
+        uses: actions/checkout@v7.0.1
+          
+      - name: mise setup
+        uses: jdx/mise-action@v5.0.0
+        with:
+          working_directory: web
+
+      - name: install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: run format
+        run: pnpm run format:check
+
+      - name: run lint
+        run: pnpm run lint:check
+
+      - name: run type check
+        run: pnpm run typecheck
+
+      - name: run test
+        run: pnpm run test
+
+      - name: run build
+        run: pnpm run build
