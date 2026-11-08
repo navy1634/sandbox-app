@@ -6,6 +6,7 @@ import Header from "@/components/Header/components";
 import type { NavbarItem } from "@/components/Navbar/components";
 import { createRuntimeConfig } from "./runtimeConfig";
 import { RuntimeConfigProvider } from "./runtimeConfigContext";
+import { WaitingRoomHeartbeat } from "./waitingRoomHeartbeat";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default function RootLayout({
     <html lang="ja" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <RuntimeConfigProvider value={runtimeConfig}>
+          <WaitingRoomHeartbeat />
           <Header navItems={navItems} /> {/* Headerコンポーネント*/}
           <main className="p-4">{children}</main>
           <Footer /> {/* Footerコンポーネント*/}

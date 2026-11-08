@@ -86,6 +86,10 @@ kubectl -n sandbox-app create secret tls sandbox-app-tls \
 
 `OIDC_ISSUER_URL` はブラウザから到達できるsandbox_authのIssuer、`OIDC_INTERNAL_URL` はアプリAPIからDiscovery・Token・JWKSへ到達するURLを指定します。`OIDC_REDIRECT_URL` はアプリAPIの公開callback URLです。`NEXT_PUBLIC_API_BASE_URL` は同一originのAPIを使う場合は空文字にします。
 
+`web-configmap.yaml` の `WAITING_ROOM_PUBLIC_URL` にはブラウザー向けの待合室URLを、`WAITING_ROOM_INTERNAL_URL` にはWeb Podから使う待合室Service URLを指定します。待合室側の `APP_RETURN_ORIGIN` にはアプリの公開originを設定し、`SESSION_COOKIE_DOMAIN` には両方のホストを含む親ドメインを設定します。
+
+`WAITING_ROOM_ENABLED` の既定値は `false` です。負荷上昇に備えて入場制限を行う場合は `true` に変更し、ConfigMapを適用してWeb Deploymentを再起動します。切り替え手順は [WebのREADME](../web/README.md#仮想待合室) を参照してください。
+
 ## 適用
 
 ```sh

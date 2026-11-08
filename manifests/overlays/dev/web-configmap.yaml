@@ -4,3 +4,6 @@ metadata:
   name: sandbox-app-web-config
 data:
   NEXT_PUBLIC_API_BASE_URL: ""
+  WAITING_ROOM_ENABLED: "true"
+  WAITING_ROOM_PUBLIC_URL: "https://waiting-room.navy1634.com"
+  WAITING_ROOM_INTERNAL_URL: "http://virtual-waiting-room-app.sandbox-waiting-room.svc.cluster.local:80"
