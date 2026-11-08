@@ -1,0 +1,47 @@
+name: Manifests CI
+
+on:
+  pull_request:
+    paths:
+      - manifests/**
+      - .github/workflows/manifests-ci.yml
+      - .github/actions/setup-mise/action.yml
+  push:
+    branches:
+      - main
+    paths:
+      - manifests/**
+      - .github/workflows/manifests-ci.yml
+      - .github/actions/setup-mise/action.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Render manifests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    defaults:
+      run:
+        working-directory: manifests
+        
+    steps:
+      - name: checkout
+        uses: actions/checkout@v7.0.1
+
+      - name: mise setup
+        uses: jdx/mise-action@v5.0.0
+        with:
+          working_directory: manifests
+          
+      - name: render dev
+        run: mise run render dev
+        
+      - name: render prod
+        run: mise run render prd
