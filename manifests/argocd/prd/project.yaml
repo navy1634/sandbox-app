@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: sandbox-app-prd
+  name: sandbox-app
   namespace: argocd
 spec:
   description: sandbox-app の prd overlay を production cluster へ同期します
   sourceRepos:
     - https://github.com/navy1634/sandbox_app.git
   destinations:
-    - name: production
+    - server: https://kubernetes.default.svc
       namespace: sandbox-app
   clusterResourceWhitelist:
     - group: ""
