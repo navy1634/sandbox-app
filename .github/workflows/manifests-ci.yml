@@ -2,10 +2,13 @@ name: Manifests CI
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - develop
     paths:
       - manifests/**
       - .github/workflows/manifests-ci.yml
-
 permissions:
   contents: read
 
@@ -22,7 +25,10 @@ jobs:
     defaults:
       run:
         working-directory: manifests
-        
+
+    env:
+      ENV: ${{ github.event.pull_request.head.ref == 'main' && 'prd' || 'dev' }}
+
     steps:
       - name: checkout
         uses: actions/checkout@v7.0.1
@@ -31,9 +37,6 @@ jobs:
         uses: jdx/mise-action@v5.0.0
         with:
           working_directory: manifests
-          
-      - name: render dev
-        run: mise run render dev
-        
-      - name: render prod
-        run: mise run render prd
+
+      - name: render manifests
+        run: mise run render ${{ env.ENV }}

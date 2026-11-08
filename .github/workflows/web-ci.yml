@@ -2,10 +2,13 @@ name: Web CI
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - develop
     paths:
       - web/**
       - .github/workflows/web-ci.yml
-
 permissions:
   contents: read
 
@@ -18,15 +21,15 @@ jobs:
     name: Web checks
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    
+
     defaults:
       run:
         working-directory: web
-        
+
     steps:
       - name: checkout
         uses: actions/checkout@v7.0.1
-          
+
       - name: mise setup
         uses: jdx/mise-action@v5.0.0
         with:
