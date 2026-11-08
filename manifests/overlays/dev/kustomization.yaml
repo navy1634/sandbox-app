@@ -14,7 +14,7 @@ images:
     newTag: latest
   - name: sandbox-app-web
     newName: registry.local:5000/sandbox_app-web
-    newTag: latest
+    newTag: 19177522cf64
 patches:
   - target:
       kind: Deployment

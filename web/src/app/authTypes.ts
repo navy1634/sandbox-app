@@ -15,6 +15,6 @@ export type MeResponse = {
   };
 };
 
-export function appLoginURL(runtimeConfig: RuntimeConfig) {
+export function appLoginURL(runtimeConfig: Pick<RuntimeConfig, "apiBaseURL">) {
   return `${runtimeConfig.apiBaseURL}/auth/login`;
 }

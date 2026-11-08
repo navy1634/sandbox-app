@@ -6,6 +6,9 @@ services:
     container_name: sandbox-app-web-container
     environment:
       - NEXT_PUBLIC_API_BASE_URL=${SANDBOX_API_URL:-http://localhost:8081}
+      - WAITING_ROOM_ENABLED=${WAITING_ROOM_ENABLED:-false}
+      - WAITING_ROOM_PUBLIC_URL=${SANDBOX_WAITING_ROOM_URL:-http://localhost:3100}
+      - WAITING_ROOM_INTERNAL_URL=${SANDBOX_WAITING_ROOM_INTERNAL_URL:-http://host.docker.internal:3100}
     volumes:
       - ./web:/app
       - /app/node_modules

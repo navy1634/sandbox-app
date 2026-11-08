@@ -31,6 +31,25 @@ sandbox_auth側では、OIDC clientのcallback URLを完全一致で登録して
 OIDC_CLIENTS=[{"client_id":"external-app","client_secret":"replace-with-a-random-secret","redirect_uris":["http://localhost:8081/auth/callback"]}]
 ```
 
+## 仮想待合室
+
+通常は仮想待合室を使わず、アプリのページを表示します。`WAITING_ROOM_ENABLED=true` を設定した場合だけ、入場状態を確認してからページを表示します。空き枠があればそのままアプリへ進み、満席なら順番を待ってから元のURLへ戻ります。有効時はブラウザーが定期的に入場枠を更新します。未設定、`false`、その他の値では入場確認と更新を行いません。
+
+KubernetesではWebのConfigMapの `WAITING_ROOM_ENABLED` を変更し、Web Deploymentを再起動すると切り替わります。ソースの `web-configmap.yaml` にも運用する値を保存してください。
+
+```sh
+kubectl patch configmap sandbox-app-web-config -n sandbox-app --type merge -p '{"data":{"WAITING_ROOM_ENABLED":"true"}}'
+kubectl rollout restart deployment/sandbox-app-web -n sandbox-app
+```
+
+無効に戻す場合は値を `false` にして同じ手順で再起動します。
+
+Ingress 配下では、Ingress が設定する `X-Forwarded-Host` と `X-Forwarded-Proto` を公開 URL と Origin の判定に使います。Ingress は利用者から受け取った転送ヘッダーを信頼せず、実際のホストとプロトコルで設定してください。
+
+`WAITING_ROOM_PUBLIC_URL` にはブラウザーからアクセスできる待合室URLを、`WAITING_ROOM_INTERNAL_URL` にはWebサーバーからアクセスできる待合室URLを指定します。Docker Composeではそれぞれ `http://localhost:3100` と `http://host.docker.internal:3100` を使います。ホスト上で `pnpm dev` を起動する場合は、両方に `http://localhost:3100` を指定します。
+
+待合室側では `APP_RETURN_ORIGIN` をこのアプリの公開originにし、`SESSION_COOKIE_DOMAIN` を待合室とアプリの両方を含む親ドメインに設定します。ローカル開発では待合室とアプリを `localhost` で開き、Cookie domainを空にします。Docker Composeから接続する待合室は、コンテナ外から到達できるアドレスで待ち受けてください。
+
 ## ローカル起動
 
 ```txt
