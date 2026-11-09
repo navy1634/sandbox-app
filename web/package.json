@@ -40,7 +40,7 @@
     "@vitest/coverage-v8": "^4.1.10",
     "babel-plugin-react-compiler": "1.0.0",
     "oxfmt": "0.58.0",
-    "oxlint": "1.73.0",
+    "oxlint": "1.93.0",
     "playwright": "^1.61.1",
     "storybook": "^10.5.2",
     "stylelint": "17.14.0",
