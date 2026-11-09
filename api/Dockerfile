@@ -1,4 +1,4 @@
-FROM golang:1.26-bookworm AS builder
+FROM golang:1.27-bookworm AS builder
 WORKDIR /app
 COPY . .
 RUN --mount=type=cache,target=~/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build go build -o /app/bin/api ./src
