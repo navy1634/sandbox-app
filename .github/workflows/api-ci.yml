@@ -31,7 +31,7 @@ jobs:
           persist-credentials: false
 
       - name: mise setup
-        uses: jdx/mise-action@v5.0.0
+        uses: jdx/mise-action@v5.2.8
         with:
           working_directory: api
 
