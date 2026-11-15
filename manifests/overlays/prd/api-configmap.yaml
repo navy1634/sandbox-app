@@ -4,8 +4,8 @@ metadata:
   name: sandbox-app-api-config
 data:
   ADDR: ":8080"
-  FRONTEND_URL: "https://app.example.com"
-  OIDC_ISSUER_URL: "https://auth.example.com/api"
+  FRONTEND_URL: "https://app.sandbox.navy1634.com"
+  OIDC_ISSUER_URL: "https://auth.sandbox.navy1634.com/api"
   OIDC_INTERNAL_URL: "http://sandbox-auth-api.sandbox-auth.svc.cluster.local:8080/api"
   OIDC_CLIENT_ID: "external-app"
-  OIDC_REDIRECT_URL: "https://app.example.com/auth/callback"
+  OIDC_REDIRECT_URL: "https://app.sandbox.navy1634.com/auth/callback"

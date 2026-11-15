@@ -9,10 +9,10 @@ resources:
   - ../../base
 images:
   - name: sandbox-app-api
-    newName: registry.example.com/sandbox-app-api
+    newName: registry.local:5000/sandbox_app-api
     newTag: latest
   - name: sandbox-app-web
-    newName: registry.example.com/sandbox-app-web
-    newTag: latest
+    newName: registry.local:5000/sandbox_app-web
+    newTag: 19177522cf64
 patches:
   - path: replicas-patch.yaml
