@@ -8,10 +8,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - app.example.com
+        - app.sandbox.navy1634.com
       secretName: sandbox-app-tls
   rules:
-    - host: app.example.com
+    - host: app.sandbox.navy1634.com
       http:
         paths:
           - path: /me
