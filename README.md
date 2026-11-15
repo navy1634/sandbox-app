@@ -44,13 +44,3 @@ OIDC_REDIRECT_URL=http://localhost:8081/auth/callback
 ```
 
 アプリAPIの `OIDC_ISSUER_URL` はブラウザから到達できるIssuer、`OIDC_INTERNAL_URL` はAPIコンテナからDiscovery・Token・JWKSへ到達するURLです。`APP_AUTH_SECRET` はアプリ専用の32バイト以上の秘密値にしてください。
-
-## 注意
-
-ローカルComposeではsandbox_auth APIを8080、sandbox_app APIを8081で公開します。ポートを変更する場合は、OIDCの `OIDC_REDIRECT_URL`、sandbox_auth側の `redirect_uris`、Webの `NEXT_PUBLIC_API_BASE_URL` を同じcallback構成に合わせてください。
-
-```txt
-192.168.0.100 registry.local
-192.168.0.242 auth.sandbox.navy1634.com
-192.168.0.242 app.sandbox.navy1634.com
-```
