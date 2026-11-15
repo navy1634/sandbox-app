@@ -37,47 +37,18 @@ flowchart TD
 kubectl create namespace sandbox-app
 
 kubectl -n sandbox-app create secret generic sandbox-app-database-secret \
-  --from-literal=POSTGRES_DB=test \
+  --from-literal=POSTGRES_DB=app \
   --from-literal=POSTGRES_USER=postgres \
   --from-literal=POSTGRES_PASSWORD='replace-me'
 
 kubectl -n sandbox-app create secret generic sandbox-app-api-secret \
-  --from-literal=DATABASE_URL='postgres://postgres:replace-me@sandbox-app-database.sandbox-app.svc.cluster.local:5432/test?sslmode=disable' \
+  --from-literal=DATABASE_URL='postgres://postgres:replace-me@sandbox-app-database.sandbox-app.svc.cluster.local:5432/app?sslmode=disable' \
   --from-literal=OIDC_CLIENT_SECRET='replace-with-the-sandbox-auth-client-secret' \
   --from-literal=APP_AUTH_SECRET='replace-with-at-least-32-bytes'
 
 kubectl -n sandbox-app create secret tls sandbox-app-tls \
   --cert=/path/to/tls.crt \
   --key=/path/to/tls.key
-```
-
-## ローカル HTTPS
-
-ブラウザが使う OS の信頼ストアへ、`mkcert` のローカル CA を登録します。
-
-```sh
-mkcert -install
-```
-
-開発用ドメインの証明書を作成します。
-
-```sh
-mkcert app.sandbox.navy1634.com
-```
-
-作成された証明書を Kubernetes の TLS Secret として登録します。
-
-```sh
-kubectl -n sandbox-app delete secret sandbox-app-tls
-kubectl -n sandbox-app create secret tls sandbox-app-tls \
-  --cert=app.sandbox.navy1634.com.pem \
-  --key=app.sandbox.navy1634.com-key.pem
-```
-
-ブラウザが使う OS の hosts に、Ingress の IP と開発用ドメインを設定します。
-
-```txt
-192.168.0.242 app.sandbox.navy1634.com
 ```
 
 ## 設定
@@ -93,5 +64,5 @@ kubectl -n sandbox-app create secret tls sandbox-app-tls \
 ## 適用
 
 ```sh
-kubectl apply -k manifests/overlays/{dev|prd}
+kubectl apply -k overlays/{dev|prd}
 ```
